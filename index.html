@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>micro:bit BLE Logger</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 20px;
+      line-height: 1.4;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    header {
+      background: #0066cc;
+      color: white;
+      padding: 20px;
+    }
+    
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .subtitle {
+      opacity: 0.9;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    
+    .connection-panel {
+      padding: 20px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #dc3545;
+    }
+    
+    .status-dot.connected {
+      background: #28a745;
+    }
+    
+    .status-text {
+      font-weight: 600;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .primary-btn {
+      background: #0066cc;
+      color: white;
+    }
+    
+    .primary-btn:hover {
+      background: #0052a3;
+    }
+    
+    .secondary-btn {
+      background: #6c757d;
+      color: white;
+    }
+    
+    .secondary-btn:hover {
+      background: #545b62;
+    }
+    
+    .danger-btn {
+      background: #dc3545;
+      color: white;
+    }
+    
+    .danger-btn:hover {
+      background: #bd2130;
+    }
+    
+    .message-panel {
+      padding: 20px;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .input-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    
+    .log-panel {
+      padding: 20px;
+    }
+    
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .log-container {
+      background: #1a1a1a;
+      color: #f0f0f0;
+      border-radius: 5px;
+      padding: 15px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 13px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .log-line {
+      margin-bottom: 5px;
+      padding: 3px 0;
+      border-bottom: 1px solid #333;
+    }
+    
+    .log-line.tx {
+      color: #4fc3f7;
+    }
+    
+    .log-line.rx {
+      color: #69f0ae;
+    }
+    
+    .log-line.info {
+      color: #ffb74d;
+    }
+    
+    .log-line.success {
+      color: #81c784;
+    }
+    
+    .log-line.error {
+      color: #e57373;
+    }
+    
+    .timestamp {
+      color: #9e9e9e;
+      margin-right: 10px;
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>micro:bit BLE Logger</h1>
+      <div class="subtitle">Simple Web Bluetooth communication with logging</div>
+    </header>
+    
+    <div class="connection-panel">
+      <div class="status-bar">
+        <div class="status-dot" id="statusDot"></div>
+        <span class="status-text" id="statusText">Disconnected</span>
+      </div>
+      
+      <div class="button-group">
+        <button id="connectBtn" class="primary-btn">Connect to micro:bit</button>
+        <button id="disconnectBtn" class="danger-btn" disabled>Disconnect</button>
+        <button id="clearLogBtn" class="secondary-btn">Clear Log</button>
+      </div>
+    </div>
+    
+    <div class="message-panel">
+      <div class="input-group">
+        <label for="messageInput">Message to send:</label>
+        <input type="text" id="messageInput" placeholder="Type your message here..." />
+      </div>
+      <button id="sendBtn" class="primary-btn" disabled>Send Message</button>
+    </div>
+    
+    <div class="log-panel">
+      <div class="log-header">
+        <h2>Communication Log</h2>
+        <button id="exportLogBtn" class="secondary-btn">Export Log</button>
+      </div>
+      <div class="log-container" id="logContainer"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

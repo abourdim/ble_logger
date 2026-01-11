@@ -4,247 +4,88 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>micro:bit BLE Logger</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      padding: 20px;
-      line-height: 1.4;
-    }
-    
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    
-    header {
-      background: #0066cc;
-      color: white;
-      padding: 20px;
-    }
-    
-    h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    
-    .subtitle {
-      opacity: 0.9;
-      font-size: 14px;
-      margin-top: 5px;
-    }
-    
-    .connection-panel {
-      padding: 20px;
-      background: #f8f9fa;
-      border-bottom: 1px solid #e9ecef;
-    }
-    
-    .status-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
-    }
-    
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #dc3545;
-    }
-    
-    .status-dot.connected {
-      background: #28a745;
-    }
-    
-    .status-text {
-      font-weight: 600;
-    }
-    
-    .button-group {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-    
-    .primary-btn {
-      background: #0066cc;
-      color: white;
-    }
-    
-    .primary-btn:hover {
-      background: #0052a3;
-    }
-    
-    .secondary-btn {
-      background: #6c757d;
-      color: white;
-    }
-    
-    .secondary-btn:hover {
-      background: #545b62;
-    }
-    
-    .danger-btn {
-      background: #dc3545;
-      color: white;
-    }
-    
-    .danger-btn:hover {
-      background: #bd2130;
-    }
-    
-    .message-panel {
-      padding: 20px;
-      border-bottom: 1px solid #e9ecef;
-    }
-    
-    .input-group {
-      margin-bottom: 15px;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 600;
-    }
-    
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ced4da;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-    
-    .log-panel {
-      padding: 20px;
-    }
-    
-    .log-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-    
-    .log-container {
-      background: #1a1a1a;
-      color: #f0f0f0;
-      border-radius: 5px;
-      padding: 15px;
-      font-family: 'Consolas', 'Monaco', monospace;
-      font-size: 13px;
-      max-height: 400px;
-      overflow-y: auto;
-    }
-    
-    .log-line {
-      margin-bottom: 5px;
-      padding: 3px 0;
-      border-bottom: 1px solid #333;
-    }
-    
-    .log-line.tx {
-      color: #4fc3f7;
-    }
-    
-    .log-line.rx {
-      color: #69f0ae;
-    }
-    
-    .log-line.info {
-      color: #ffb74d;
-    }
-    
-    .log-line.success {
-      color: #81c784;
-    }
-    
-    .log-line.error {
-      color: #e57373;
-    }
-    
-    .timestamp {
-      color: #9e9e9e;
-      margin-right: 10px;
-    }
-    
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-      
-      .button-group {
-        flex-direction: column;
-      }
-      
-      button {
-        width: 100%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>micro:bit BLE Logger</h1>
-      <div class="subtitle">Simple Web Bluetooth communication with logging</div>
-    </header>
-    
-    <div class="connection-panel">
-      <div class="status-bar">
-        <div class="status-dot" id="statusDot"></div>
-        <span class="status-text" id="statusText">Disconnected</span>
+  <div class="app">
+    <div class="rows-container">
+
+      <div class="header">
+        <div class="title-block">
+          <img src="logo.svg" alt="Logo" class="site-logo animated-logo" />
+          <div>
+            <h1>micro:bit BLE Logger</h1>
+            <div class="subtitle">Simple Web Bluetooth communication with logging</div>
+          </div>
+        </div>
+
+        <div class="status-pill" id="statusPill">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Disconnected</span>
+        </div>
       </div>
-      
-      <div class="button-group">
-        <button id="connectBtn" class="primary-btn">Connect to micro:bit</button>
-        <button id="disconnectBtn" class="danger-btn" disabled>Disconnect</button>
-        <button id="clearLogBtn" class="secondary-btn">Clear Log</button>
+
+      <div class="card" id="connectionCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">🔌</span> Connection</div>
+            <div class="card-subtitle">Connect to your micro:bit over Web Bluetooth</div>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="connectBtn" class="primary"><span class="btn-icon">🔗</span>Connect</button>
+          <button id="disconnectBtn" class="secondary" disabled><span class="btn-icon">⛔</span>Disconnect</button>
+          <button id="clearLogBtn" class="secondary"><span class="btn-icon">🧹</span>Clear Log</button>
+        </div>
+
+        <div class="hint">
+          <div class="hint-title">Tip</div>
+          <ol>
+            <li>Use Chrome/Edge on desktop or Android</li>
+            <li>Select a device named <strong>BBC micro:bit</strong></li>
+          </ol>
+        </div>
       </div>
-    </div>
-    
-    <div class="message-panel">
-      <div class="input-group">
-        <label for="messageInput">Message to send:</label>
-        <input type="text" id="messageInput" placeholder="Type your message here..." />
+
+      <div class="card" id="messageCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">✉️</span> Send Message</div>
+            <div class="card-subtitle">Type a short message and send it to the micro:bit</div>
+          </div>
+        </div>
+
+        <div class="control-section">
+          <div class="section-header">
+            <div class="section-title"><span class="section-icon">⌨️</span> Message</div>
+            <div class="section-subtitle">Press Enter or click Send</div>
+          </div>
+          <div class="form-row">
+            <input type="text" id="messageInput" placeholder="Type your message here..." />
+            <button id="sendBtn" class="primary" disabled><span class="btn-icon">📨</span>Send</button>
+          </div>
+        </div>
       </div>
-      <button id="sendBtn" class="primary-btn" disabled>Send Message</button>
-    </div>
-    
-    <div class="log-panel">
-      <div class="log-header">
-        <h2>Communication Log</h2>
-        <button id="exportLogBtn" class="secondary-btn">Export Log</button>
+
+      <div class="card log-card" id="logCard">
+        <div class="card-header">
+          <div>
+            <div class="card-title"><span class="icon">📜</span> Communication Log</div>
+            <div class="card-subtitle">TX = sent • RX = received</div>
+          </div>
+          <div class="log-controls">
+            <button id="exportLogBtn" class="secondary small"><span class="btn-icon">⬇️</span>Export</button>
+          </div>
+        </div>
+
+        <div class="log" id="logContainer" aria-live="polite"></div>
+        <div class="log-footer">
+          <span>micro:bit BLE Logger</span>
+          <span class="badge"><strong>UART</strong> service</span>
+        </div>
       </div>
-      <div class="log-container" id="logContainer"></div>
+
     </div>
   </div>
 

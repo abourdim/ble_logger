@@ -1,0 +1,2477 @@
+:root {
+    --bg-color: #020617;
+    --panel-bg: #020617;
+    --accent: #22c55e;
+    --accent-soft: rgba(34, 197, 94, 0.15);
+    --accent-strong: rgba(34, 197, 94, 0.7);
+    --danger: #f97373;
+    --muted: #9ca3af;
+    --border: #1f2937;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.18), transparent 50%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.2), transparent 55%),
+        #020617;
+    background-attachment: fixed;
+    color: #f9fafb;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 16px;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    width: 100%;
+    background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.18), transparent 60%),
+        var(--panel-bg);
+    border-radius: 16px;
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.85),
+        0 0 0 1px rgba(148, 163, 184, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.app::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(130deg, rgba(34,197,94,0.08), transparent 60%),
+        radial-gradient(circle at 20% 10%, rgba(56,189,248,0.2), transparent 50%);
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+}
+
+.rows-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+
+.header {
+    position: relative;
+    padding: 12px 18px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+}
+
+.title-block h1 {
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f9fafb;
+}
+
+.title-block .subtitle {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    margin-top: 2px;
+    letter-spacing: 0.08em;
+}
+
+/* Status chip */
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    border: 1px solid rgba(34,197,94,0.6);
+    padding: 4px 10px;
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.25), transparent 60%),
+        rgba(15,23,42,0.9);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #bbf7d0;
+    box-shadow:
+        0 0 0 1px rgba(30,64,175,0.3),
+        0 0 16px rgba(34,197,94,0.6);
+}
+
+.chip-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #22c55e;
+    box-shadow:
+        0 0 0 3px rgba(34,197,94,0.5),
+        0 0 14px rgba(22,163,74,0.9);
+}
+
+/* Layout */
+
+.row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.row:last-child {
+    margin-bottom: 0;
+}
+
+/* columns flex so cards can stretch */
+.col-left,
+.col-right {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make left + right cards in first row equal height */
+.row-top {
+    align-items: stretch;
+}
+
+/* Generic card */
+
+.card {
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background: radial-gradient(circle at top left, rgba(15,23,42,0.96), var(--panel-bg));
+    padding: 10px 12px 11px 12px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(15,23,42,0.7), transparent 60%);
+    mix-blend-mode: soft-light;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 6px;
+}
+
+.card-title {
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.card-title .icon {
+    font-size: 1.05rem;
+}
+
+.card-subtitle {
+    font-size: 0.76rem;
+    color: #9ca3af;
+    margin-top: 3px;
+}
+
+/* Status & badges */
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #f9fafb;
+    background: rgba(15, 23, 42, 0.9);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #f97373;
+    box-shadow:
+        0 0 0 2px rgba(248, 113, 113, 0.5),
+        0 0 10px rgba(248, 113, 113, 0.7);
+}
+
+.status-pill.connected {
+    border-color: rgba(34,197,94,0.9);
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.3), rgba(15,23,42,0.9));
+}
+
+.status-pill.connected .status-dot {
+    background: #22c55e;
+    box-shadow:
+        0 0 0 2px rgba(34,197,94,0.55),
+        0 0 10px rgba(22,163,74,0.9);
+}
+
+/* Generic badge */
+
+.badge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 999px;
+    border: 1px solid rgba(148,163,184,0.7);
+    color: #9ca3af;
+}
+
+.badge strong {
+    color: #e5e7eb;
+}
+
+/* Connection layout */
+
+.connection-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 10px;
+}
+
+@media (max-width: 900px) {
+    .connection-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.connection-section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin-bottom: 6px;
+}
+
+.button-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+}
+
+/* Buttons */
+
+button {
+    border: none;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 0.78rem;
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(15, 23, 42, 0.9);
+    color: #e5e7eb;
+    border: 1px solid rgba(148,163,184,0.5);
+    transition: all 0.15s ease;
+}
+
+button.primary {
+    background: linear-gradient(135deg, #22c55e, #4ade80);
+    color: #052e16;
+    border-color: rgba(34,197,94,0.9);
+    box-shadow:
+        0 12px 30px rgba(22,163,74,0.5),
+        0 0 0 1px rgba(15,23,42,0.95);
+}
+
+button.secondary {
+    background: rgba(15,23,42,0.9);
+    border-color: rgba(148,163,184,0.6);
+}
+
+button.small {
+    padding: 5px 9px;
+    font-size: 0.72rem;
+}
+
+button .btn-icon {
+    font-size: 1rem;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow:
+        0 12px 28px rgba(15,23,42,0.95),
+        0 0 0 1px rgba(59,130,246,0.5);
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: default;
+    box-shadow: none;
+}
+
+/* Hint text */
+
+.hint {
+    font-size: 0.74rem;
+    color: #9ca3af;
+    margin-top: 3px;
+}
+.hint-title {
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.hint ol {
+    margin: 0;
+    padding-left: 16px;
+}
+.hint li {
+    margin-bottom: 2px;
+}
+
+/* Mode pills */
+
+.pill-group {
+    display: inline-flex;
+    gap: 6px;
+    margin: 4px 0 8px;
+}
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(15,23,42,0.9);
+    border: 1px solid rgba(148,163,184,0.6);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    cursor: pointer;
+}
+.pill.big {
+    padding: 5px 12px;
+    font-size: 0.78rem;
+}
+.pill-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: rgba(148,163,184,0.9);
+}
+.pill.active {
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.4), rgba(15,23,42,0.9));
+    border-color: rgba(34,197,94,0.95);
+    color: #bbf7d0;
+    box-shadow:
+        0 0 0 1px rgba(22,163,74,0.6),
+        0 0 16px rgba(34,197,94,0.7);
+}
+.pill.active .pill-dot {
+    background: #22c55e;
+    box-shadow:
+        0 0 0 2px rgba(74,222,128,0.6),
+        0 0 10px rgba(22,163,74,0.9);
+}
+
+/* Device row */
+
+.device-row {
+    font-size: 0.74rem;
+    color: #9ca3af;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.device-label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.device-value {
+    color: #e5e7eb;
+    font-weight: 500;
+}
+
+/* Message log */
+
+.log-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.log-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.log {
+    flex: 1 1 auto;
+    padding: 8px 10px;
+    overflow-y: auto;
+    min-height: 0;
+    max-height: 260px; /* scrollbar appears when content taller than this */
+    font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.78rem;
+    line-height: 1.25;
+    border-radius: 10px;
+    border: 1px solid rgba(31,41,55,0.95);
+    background: rgba(15,23,42,0.98);
+}
+.log-line {
+    margin-bottom: 2px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.log-line.info    { color: #9ca3af; }
+.log-line.success { color: #bbf7d0; }
+.log-line.error   { color: #f97373; }
+.log-line.tx      { color: #a5b4fc; }
+.log-line.rx      { color: #7dd3fc; }
+
+.log-footer {
+    padding-top: 5px;
+    font-size: 0.7rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Mode selector (tabs) */
+
+.mode-selector-container {
+    padding: 12px 18px 0;
+}
+.mode-selector {
+    display: flex;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 999px;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    padding: 4px;
+    margin-bottom: 8px;
+}
+.mode-btn {
+    flex: 1;
+    text-align: center;
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.mode-btn .mode-icon {
+    font-size: 1.1rem;
+}
+.mode-btn.active {
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.4), rgba(15,23,42,0.88));
+    color: #bbf7d0;
+    box-shadow:
+        0 0 0 1px rgba(22,163,74,0.7),
+        0 0 18px rgba(34,197,94,0.6);
+}
+
+/* Tab pages */
+
+.tab-pages {
+    padding: 0 18px 16px;
+}
+.tab-page { display: none; }
+.tab-page.active { display: block; }
+
+.controls-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Controls layout: D-pad full-width with Buttons panel on the right */
+.controls-row{
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.dpad-section{
+    flex: 1 1 520px;
+}
+
+/* Right-side column next to the D-pad */
+.controls-side{
+    flex: 1 1 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.buttons-section,
+.sendtext-section{
+    width: 100%;
+}
+
+@media (max-width: 900px){
+    .controls-side{
+        flex: 1 1 280px;
+    }
+}
+
+/* Ensure decorative pseudo-elements never block clicks (important for buttons) */
+.card::before,
+.card::after,
+.chip::after{
+    pointer-events: none;
+}
+
+/* Make the D-pad wrapper comfortably fill its section */
+.dpad-section .dpad-wrapper{
+    width: 100%;
+}
+
+/* Logs card should look like a standalone card (not nested) */
+.log-card .log{
+    max-height: 260px;
+}
+
+/* Control sections */
+
+.control-section {
+    border-radius: 10px;
+    border: 1px solid rgba(31,41,55,0.9);
+    padding: 8px 10px;
+    background: rgba(15,23,42,0.95);
+}
+.section-header { margin-bottom: 6px; }
+.section-title {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.section-icon { font-size: 1rem; }
+.section-subtitle {
+    font-size: 0.74rem;
+    color: #9ca3af;
+    margin-top: 2px;
+}
+.form-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Inputs */
+
+input[type="text"],
+textarea {
+    border-radius: 999px;
+    border: 1px solid rgba(31,41,55,0.9);
+    background: rgba(15,23,42,0.95);
+    color: #e5e7eb;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    flex: 1;
+}
+textarea {
+    border-radius: 8px;
+    min-height: 80px;
+    resize: vertical;
+}
+input::placeholder,
+textarea::placeholder {
+    color: #6b7280;
+}
+input:focus-visible,
+textarea:focus-visible {
+    outline: none;
+    border-color: rgba(59,130,246,0.9);
+    box-shadow:
+        0 0 0 1px rgba(59,130,246,0.7),
+        0 0 14px rgba(59,130,246,0.5);
+}
+
+/* LED matrix */
+
+.microbit-matrix-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+}
+.microbit-outline {
+    border-radius: 14px;
+    border: 1px solid rgba(31,41,55,0.95);
+    padding: 8px 10px 10px;
+    background:
+        radial-gradient(circle at top left, rgba(30,64,175,0.2), transparent 60%),
+        rgba(15,23,42,1);
+}
+.microbit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+.microbit-chip {
+    width: 34px;
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #020617, #111827);
+    border: 1px solid rgba(148,163,184,0.5);
+}
+.microbit-ears {
+    display: flex;
+    gap: 4px;
+}
+.microbit-ear {
+    width: 6px;
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(145deg, #4b5563, #9ca3af);
+    border: 1px solid rgba(209,213,219,0.9);
+}
+.led-matrix {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding: 4px;
+    border-radius: 10px;
+    background: radial-gradient(circle at top left, #020617, #020617);
+}
+.led-cell {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    border: 1px solid rgba(31,41,55,1);
+    background: radial-gradient(circle at 30% 30%, #020617, #020617);
+    box-shadow:
+        0 2px 4px rgba(15,23,42,0.9),
+        inset 0 0 0 1px rgba(15,23,42,1);
+    cursor: pointer;
+    transition: all 0.12s ease;
+}
+.led-cell.on {
+    background: radial-gradient(circle at 30% 30%, #fef9c3, #facc15);
+    border-color: rgba(250,204,21,1);
+    box-shadow:
+        0 0 8px rgba(250,204,21,0.9),
+        0 0 16px rgba(250,204,21,0.8),
+        0 2px 6px rgba(15,23,42,0.9);
+}
+.drawing-mode-hint {
+    font-size: 0.72rem;
+    color: #9ca3af;
+    margin-top: 4px;
+}
+.matrix-controls { flex: 1; min-width: 0; }
+
+/* Chip buttons */
+
+.chip-btn {
+    border-radius: 999px;
+    border: 1px solid rgba(148,163,184,0.6);
+    background: rgba(15,23,42,0.95);
+    color: #e5e7eb;
+    padding: 5px 10px;
+    font-size: 0.74rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+.chip-btn:hover {
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.3), rgba(15,23,42,0.95));
+    border-color: rgba(34,197,94,0.9);
+}
+
+/* --- SENSES GRID IMPROVED LAYOUT --- */
+
+/* Full-width responsive grid */
+.sensor-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Each sensor block = container for value + chart */
+.sensor-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(15,23,42,0.94);
+    border: 1px solid rgba(31,41,55,0.85);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Sensor card */
+.sensor-card {
+    border-radius: 8px;
+    border: 1px solid rgba(51,65,85,0.7);
+    padding: 6px 8px;
+    background:
+        radial-gradient(circle at top left, rgba(30,64,175,0.2), transparent 60%),
+        rgba(15,23,42,0.98);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sensor-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 2px;
+}
+.sensor-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+.sensor-unit {
+    font-size: 0.7rem;
+    color: #6b7280;
+}
+.sensor-hint {
+    font-size: 0.72rem;
+    color: #9ca3af;
+    margin-top: 2px;
+}
+
+/* Charts */
+
+.chart-container {
+    border-radius: 8px;
+    border: 1px solid rgba(31,41,55,0.95);
+    padding: 6px 8px;
+    background: rgba(15,23,42,0.98);
+}
+
+.chart-container.small {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container.small canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chart-placeholder-text {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* Beginner / expert visibility */
+
+.beginner-only {
+    display: block;
+}
+.app.beginner-mode .expert-only {
+    display: none !important;
+}
+.app:not(.beginner-mode) .beginner-only {
+    display: none !important;
+}
+
+/* Responsive tweaks */
+
+@media (max-width: 700px) {
+    body {
+        padding: 8px;
+    }
+    .app {
+        border-radius: 12px;
+    }
+    .header {
+        padding: 10px 12px 8px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    .tab-pages {
+        padding: 0 12px 12px;
+    }
+}
+/* ================================
+   Kid-friendly visual upgrade 💫
+   (CSS-only: no HTML/JS changes)
+   ================================ */
+
+/* Fun animations */
+@keyframes float-soft {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+    0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
+    70%  { box-shadow: 0 0 0 10px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+
+@keyframes led-glow {
+    0%   { box-shadow: 0 0 6px rgba(250,204,21,0.7); }
+    100% { box-shadow: 0 0 16px rgba(250,204,21,1); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0; transform: translateY(-1px) scale(0.9); }
+    40%      { opacity: 1; transform: translateY(0) scale(1); }
+    60%      { opacity: 0; transform: translateY(-2px) scale(0.8); }
+}
+
+/* Title: more colorful + “logo” feeling */
+.title-block h1 {
+    font-size: 1.35rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: linear-gradient(120deg, #f97316, #22c55e, #38bdf8);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 18px rgba(56,189,248,0.4);
+    animation: float-soft 4s ease-in-out infinite;
+}
+
+.title-block .subtitle {
+    font-size: 0.82rem;
+    color: #e5e7eb;
+}
+
+/* Status chip: floaty + twinkling sparkles */
+.chip {
+    position: relative;
+    animation: float-soft 5s ease-in-out infinite;
+}
+
+.chip::after {
+    content: "✨";
+    position: absolute;
+    right: -4px;
+    top: -6px;
+    font-size: 0.8rem;
+    opacity: 0;
+    animation: twinkle 2.8s ease-in-out infinite;
+}
+
+/* Primary action button: soft pulse to invite clicks */
+button.primary {
+    animation: pulse-soft 2.8s ease-out infinite;
+}
+
+/* All buttons a bit more playful on hover (but still clean) */
+button:hover:not(:disabled) {
+    transform: translateY(-1px) scale(1.03);
+    filter: brightness(1.05);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0) scale(0.99);
+}
+
+/* Mode tabs: clearer “selected” feeling */
+.mode-btn {
+    font-size: 0.8rem;
+}
+
+.mode-btn.active {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow:
+        0 0 0 1px rgba(34,197,94,0.7),
+        0 0 18px rgba(34,197,94,0.7);
+}
+
+/* Cards: slightly brighter and more “card game” feel */
+.card {
+    border-radius: 14px;
+}
+
+.card:hover {
+    border-color: rgba(148,163,184,0.8);
+    box-shadow:
+        0 10px 30px rgba(15,23,42,0.9),
+        0 0 18px rgba(34,197,94,0.25);
+    transform: translateY(-1px);
+    transition: all 0.18s ease;
+}
+
+/* Sensor cards: more colorful and fun */
+.sensor-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.sensor-card::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(59,130,246,0.18), transparent 60%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.sensor-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(96,165,250,0.9);
+    box-shadow: 0 8px 20px rgba(15,23,42,0.9);
+}
+
+.sensor-card:hover::before {
+    opacity: 1;
+}
+
+.sensor-label {
+    font-weight: 600;
+    color: #e5e7eb;
+}
+
+.sensor-hint {
+    font-size: 0.76rem;
+    color: #a5b4fc;
+}
+
+/* LED drawing board: extra “glow toy” effect */
+.led-cell {
+    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.led-cell:hover {
+    transform: translateY(-1px) scale(1.08);
+}
+
+.led-cell.on {
+    animation: led-glow 1.4s ease-in-out infinite alternate;
+}
+
+/* Small tweak to make the whole app feel softer */
+.app {
+    border-radius: 18px;
+}
+/* ============================================
+   SUPER FUNNY MODE 🤪 (CSS only)
+   - cartoon wobble
+   - comic outlines
+   - gentle rainbow colors
+   - wiggles, bounces, sparkles
+   ============================================ */
+
+/* Funny animations */
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes rainbowText {
+  0% { color: #f97316; }
+  25% { color: #eab308; }
+  50% { color: #22c55e; }
+  75% { color: #3b82f6; }
+  100% { color: #a855f7; }
+}
+
+@keyframes sparkle {
+  0% { opacity: 0; transform: scale(0.6) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(20deg); }
+  100% { opacity: 0; transform: scale(0.6) rotate(0deg); }
+}
+
+/* Funny header title (rainbow + wobble) */
+.title-block h1 {
+    animation: rainbowText 3s infinite linear,
+               wobble 4s infinite ease-in-out;
+    text-shadow: 0 0 12px rgba(255,255,255,0.4);
+    font-weight: 900;
+}
+
+/* Subtitle more playful */
+.title-block .subtitle {
+    color: #fde68a !important;
+    animation: wobble 6s infinite ease-in-out;
+}
+
+/* Chip = sticker badge */
+.chip {
+    border-radius: 18px;
+    border: 2px dashed #22c55e;
+    background: rgba(34,197,94,0.15);
+    position: relative;
+    animation: bounce 3s infinite ease-in-out;
+}
+
+.chip::after {
+    content: "⭐";
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    font-size: 1.2rem;
+    animation: sparkle 2.5s infinite ease-in-out;
+}
+
+/* Buttons: cartoon bubbles */
+button {
+    border-radius: 12px !important;
+    font-weight: 700;
+    border: 2px solid #fff !important;
+    background: linear-gradient(135deg, #f9a8d4, #93c5fd);
+    color: #111 !important;
+    text-shadow: none !important;
+    transition: 0.15s ease;
+}
+
+button:hover:not(:disabled) {
+    transform: scale(1.12) rotate(2deg);
+    filter: brightness(1.15);
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.94);
+}
+
+/* Primary button = SUPER bubble */
+button.primary {
+    box-shadow: 0 0 14px 4px rgba(255,255,255,0.4);
+    animation: bounce 2.5s infinite ease-in-out;
+}
+
+/* Tabs = bubble gum */
+.mode-btn.active {
+    background: linear-gradient(135deg, #34d399, #a7f3d0);
+    transform: scale(1.15);
+    border: 2px solid #6ee7b7;
+    box-shadow: 0 0 12px rgba(34,197,94,0.8);
+}
+
+/* Cards = cartoon rectangles */
+.card {
+    border-radius: 16px;
+    border: 3px solid #0f172a !important;
+    background: #1e293b !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+}
+
+/* Random confetti in corners */
+.card::before {
+    content: "🎈";
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    opacity: 0.7;
+    animation: wobble 5s infinite ease-in-out;
+}
+
+.card::after {
+    content: "🎉";
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    opacity: 0.7;
+    animation: wobble 4s infinite ease-in-out reverse;
+}
+
+/* Sensor cards: colorful gradients */
+.sensor-card {
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(16,185,129,0.25));
+    border: 2px solid #334155 !important;
+    transition: 0.15s ease;
+}
+
+.sensor-card:hover {
+    transform: scale(1.05) rotate(-1deg);
+    border-color: #38bdf8 !important;
+}
+
+/* Sensor value BIG & FUN */
+.sensor-value {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #38bdf8;
+    text-shadow: 0 0 8px rgba(59,130,246,0.6);
+}
+
+/* LED cells = glowing candies */
+.led-cell {
+    border-radius: 6px !important;
+    transition: 0.12s ease;
+}
+
+.led-cell:hover {
+    transform: scale(1.2);
+}
+
+.led-cell.on {
+    background: #fde047 !important;
+    box-shadow: 0 0 12px 4px rgba(250,204,21,0.9);
+    animation: sparkle 1.2s infinite ease-in-out;
+}
+
+/* Sliders more colorful */
+input[type="range"]::-webkit-slider-thumb {
+    background: #f9a8d4 !important;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    background: #93c5fd !important;
+}
+
+/* The whole app softer */
+.app {
+    border-radius: 22px;
+}
+
+button {
+    color: #fff !important;
+}
+
+.servo-gauge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.gauge-value {
+    font-size: 0.9rem;
+    margin-top: 4px;
+    color: #e5e7eb;
+}
+/* ======================
+   GAMEPAD D-PAD LAYOUT
+   =========================== */
+
+.dpad-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.dpad-middle-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* Center circle (non-interactive) */
+.dpad-center {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(148,163,184,0.5);
+    box-shadow:
+        0 0 10px rgba(148,163,184,0.2),
+        inset 0 0 6px rgba(148,163,184,0.3);
+}
+
+/* Buttons */
+.dpad-btn {
+    width: 60px;
+    height: 48px;
+    font-size: 1.25rem;
+    text-align: center;
+    justify-content: center;
+    border-radius: 12px !important;
+    font-weight: 700;
+}
+
+/* Fire button */
+.fire-btn {
+    margin-top: 4px;
+    width: 110px;
+    font-size: 1rem;
+    padding: 10px 0;
+    border-radius: 14px !important;
+    background: linear-gradient(135deg, #f87171, #fb923c) !important;
+    color: #111 !important;
+    box-shadow:
+        0 0 10px rgba(252, 165, 165, 0.4),
+        0 0 20px rgba(251, 146, 60, 0.4);
+}
+
+.fire-btn:hover {
+    transform: scale(1.07);
+}
+
+/* Hover animations for D-Pad arrows */
+.dpad-btn:hover {
+    transform: scale(1.12);
+    filter: brightness(1.1);
+}
+/* ==========================
+   LED Drawing Board – groups
+   ========================== */
+
+.matrix-groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.matrix-group {
+    flex: 1 1 160px;
+    border-radius: 10px;
+    border: 1px solid rgba(31,41,55,0.8);
+    background: rgba(15,23,42,0.9);
+    padding: 6px 8px;
+}
+
+.matrix-group-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin-bottom: 4px;
+}
+
+.button-row.compact {
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.button-row.compact .chip-btn.small {
+    padding-inline: 8px;
+    font-size: 0.72rem;
+}
+
+.title-block {
+    display: flex;
+    align-items: center; /* vertically center logo and text */
+    gap: 12px;           /* space between logo and text */
+}
+
+.site-logo {
+    width: 50px;   /* big logo */
+    height: 50px;
+	color: #ffffff; /* logo will take this color */
+}
+
+.animated-logo {
+  width: 50px;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.animated-logo:hover {
+  transform: rotate(15deg) scale(1.1);
+  filter: drop-shadow(0 0 6px #ff6600);
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.15) rotate(-2deg); }
+  100% { transform: scale(1); }
+}
+
+.animated-logo {
+  width: 140px;
+  animation: pulse 2.4s infinite;
+  filter: drop-shadow(0 0 10px rgba(56,189,248,0.55));
+}
+
+@media (max-width: 700px){
+  .site-logo,
+  .animated-logo{ width: 96px; }
+}
+
+/* Kids Mode Theme */
+.app.kids-mode {
+  --bg-color: #fff7ed;        /* soft cream background */
+  --panel-bg: #fde68a;        /* pastel yellow panels */
+  --accent: #fb923c;          /* cheerful orange */
+  --accent-soft: rgba(251, 146, 60, 0.25);
+  --accent-strong: rgba(251, 146, 60, 0.7);
+  --danger: #f87171;          /* friendly red */
+  --muted: #6b7280;           /* softer gray */
+  --border: #fcd34d;          /* golden border */
+  color: #3f3f46;             /* softer text color */
+}
+
+.app.kids-mode h1,
+.app.kids-mode .card-title {
+  color: #fb923c; /* warm orange titles */
+}
+
+.app.kids-mode button.primary {
+  background: linear-gradient(135deg, #f97316, #facc15);
+  color: #fff;
+  border-color: #fb923c;
+  box-shadow: 0 6px 18px rgba(251, 146, 60, 0.4);
+}
+
+/* Kids Mode – playful animations */
+.app.kids-mode {
+  animation: backgroundShift 12s infinite alternate ease-in-out;
+}
+
+/* Background gently shifts colors */
+@keyframes backgroundShift {
+  0%   { background-color: #fff7ed; }
+  25%  { background-color: #fde68a; }
+  50%  { background-color: #fbcfe8; }
+  75%  { background-color: #93c5fd; }
+  100% { background-color: #86efac; }
+}
+
+/* Buttons bounce like bubbles */
+.app.kids-mode button {
+  animation: bubbleBounce 3s infinite ease-in-out;
+}
+
+@keyframes bubbleBounce {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.12) rotate(2deg); }
+}
+
+/* Titles rainbow shimmer */
+.app.kids-mode h1 {
+  animation: rainbowShimmer 5s infinite linear;
+}
+
+@keyframes rainbowShimmer {
+  0%   { color: #f97316; }
+  20%  { color: #facc15; }
+  40%  { color: #22c55e; }
+  60%  { color: #3b82f6; }
+  80%  { color: #a855f7; }
+  100% { color: #f97316; }
+}
+
+/* Chips sparkle */
+.app.kids-mode .chip::after {
+  content: "✨";
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  font-size: 1rem;
+  animation: sparklePop 2.5s infinite ease-in-out;
+}
+
+@keyframes sparklePop {
+  0%   { opacity: 0; transform: scale(0.6) rotate(0deg); }
+  50%  { opacity: 1; transform: scale(1.2) rotate(20deg); }
+  100% { opacity: 0; transform: scale(0.6) rotate(0deg); }
+}
+
+/* LED cells wiggle when on */
+.app.kids-mode .led-cell.on {
+  animation: candyGlow 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes candyGlow {
+  0%   { transform: scale(1); box-shadow: 0 0 8px #facc15; }
+  100% { transform: scale(1.15); box-shadow: 0 0 16px #f97316; }
+}
+
+/* Bench tab custom style */
+.tab-page[data-page="bench"] .card-title {
+    color: #facc15; /* golden accent */
+}
+
+.tab-page[data-page="bench"] .section-title {
+    color: #f97316; /* orange highlight */
+}
+
+.bench-response {
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(31,41,55,0.9);
+  background: rgba(15,23,42,0.95);
+  padding: 6px 10px;
+  font-family: "SF Mono", ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: #e5e7eb;
+}
+
+/* =========================
+   OTHERS TAB – compact grid
+   ========================= */
+
+.tab-page[data-page="others"] .tool-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Style the <details> containers */
+.tab-page[data-page="others"] .tool-group {
+    border-radius: 10px;
+    border: 1px solid rgba(31,41,55,0.8);
+    background: rgba(15,23,42,0.95);
+    padding: 4px 6px 8px;
+}
+
+/* Make the summary look like a header row */
+.tab-page[data-page="others"] .tool-group > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 4px 2px 4px;
+}
+
+/* Hide default triangle */
+.tab-page[data-page="others"] .tool-group > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Add our own small indicator */
+.tab-page[data-page="others"] .tool-group > summary::before {
+    content: "▸";
+    margin-right: 6px;
+    font-size: 0.7rem;
+    color: #9ca3af;
+}
+.tab-page[data-page="others"] .tool-group[open] > summary::before {
+    content: "▾";
+}
+
+/* Turn controls-grid into a horizontal mini-card grid */
+.tab-page[data-page="others"] .controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 8px;
+}
+
+/* Make each tool more compact */
+.tab-page[data-page="others"] .control-section {
+    padding: 6px 7px;
+}
+
+.tab-page[data-page="others"] .section-header {
+    margin-bottom: 4px;
+}
+
+.tab-page[data-page="others"] .section-title {
+    font-size: 0.74rem;
+}
+
+/* Slightly smaller form-row spacing in Others tab */
+.tab-page[data-page="others"] .form-row {
+    gap: 6px;
+    margin-top: 3px;
+}
+/* ============================================
+   OTHERS TAB — strict 1–2 items per row layout
+   ============================================ */
+
+.tab-page[data-page="others"] .controls-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 per row */
+    gap: 8px;
+}
+
+/* On narrow screens → only 1 per row */
+@media (max-width: 600px) {
+    .tab-page[data-page="others"] .controls-grid {
+        grid-template-columns: 1fr; /* 1 per row */
+    }
+}
+
+/* Make cards compact */
+.tab-page[data-page="others"] .control-section {
+    padding: 8px 10px;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* ====================================
+   STRONGER CARD SEPARATION (bold look)
+   ==================================== */
+
+.tab-page[data-page="others"] .control-section {
+    background: rgba(255,255,255,0.08); /* brighter block */
+    border: 1.5px solid rgba(255,255,255,0.25); /* stronger border */
+    border-radius: 12px;
+    padding: 10px 12px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.7);
+}
+
+.tab-page[data-page="others"] .control-section:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.35);
+    transform: translateY(-1px);
+    transition: 0.15s ease;
+}
+/* ===========================================
+   COLORED BORDER PER CATEGORY (clean + clear)
+   =========================================== */
+
+/* BASIC CONTROLS */
+.tool-group:nth-child(1) .control-section {
+    border-left: 4px solid #3b82f6; /* blue */
+}
+
+/* INDICATORS & OUTPUTS */
+.tool-group:nth-child(2) .control-section {
+    border-left: 4px solid #14b8a6; /* teal */
+}
+
+/* AUDIO, TIME & RANDOM */
+.tool-group:nth-child(3) .control-section {
+    border-left: 4px solid #a855f7; /* purple */
+}
+
+/* ADVANCED CONTROLS */
+.tool-group:nth-child(4) .control-section {
+    border-left: 4px solid #f59e0b; /* amber/orange */
+}
+
+/* SIMULATORS & HARDWARE */
+.tool-group:nth-child(5) .control-section {
+    border-left: 4px solid #ec4899; /* pink */
+}
+/* ============================================
+   BIG / COLORFUL expand arrows for <details>
+   ============================================ */
+
+/* Make summary area larger + easier to click */
+.tool-group > summary {
+    padding: 10px 4px;              /* larger tap zone */
+    font-size: 1rem;                /* slightly bigger text */
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Remove default marker */
+.tool-group > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Big arrow icon */
+.tool-group > summary::before {
+    content: "▸";                   /* closed arrow */
+    font-size: 24px;                /* MUCH bigger arrow */
+    font-weight: bold;
+    margin-right: 10px;
+    transition: transform 0.2s ease;
+}
+
+/* Rotate arrow when opened */
+.tool-group[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+/* =============================
+   Neon arrow color per category
+   ============================= */
+
+/* BASIC CONTROLS — neon blue */
+.tool-group:nth-child(1) > summary::before {
+    color: #00e5ff;
+    text-shadow: 0 0 6px #00e5ff;
+}
+
+/* OUTPUTS — neon aqua */
+.tool-group:nth-child(2) > summary::before {
+    color: #00ffc8;
+    text-shadow: 0 0 6px #00ffc8;
+}
+
+/* AUDIO/TIME — neon purple */
+.tool-group:nth-child(3) > summary::before {
+    color: #c77dff;
+    text-shadow: 0 0 6px #c77dff;
+}
+
+/* ADVANCED — neon orange */
+.tool-group:nth-child(4) > summary::before {
+    color: #ff9d00;
+    text-shadow: 0 0 6px #ff9d00;
+}
+
+/* SIMULATORS — neon pink */
+.tool-group:nth-child(5) > summary::before {
+    color: #ff00aa;
+    text-shadow: 0 0 6px #ff00aa;
+}
+/* ==============================================
+   NEON CIRCULAR EXPAND ICONS FOR <details> 
+   ============================================== */
+
+/* Bigger summary area */
+.tool-group > summary {
+    padding: 10px 6px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+/* Remove default triangle */
+.tool-group > summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Create the circle */
+.tool-group > summary::before {
+    content: ""; /* content updated per category below */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;  /* arrow color */
+    background: #fff; /* temporary, replaced below */
+    box-shadow: 0 0 10px currentColor;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Rotate arrow when opened */
+.tool-group[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+/* =============================
+   Neon circle per category
+   ============================= */
+
+/* BASIC CONTROLS — Neon Blue */
+.tool-group:nth-child(1) > summary::before {
+    content: "▶";
+    background: #00e5ff;
+    color: #00151a;
+    box-shadow: 0 0 12px #00e5ff, 0 0 22px #00e5ff80;
+}
+
+/* OUTPUTS — Neon Aqua */
+.tool-group:nth-child(2) > summary::before {
+    content: "▶";
+    background: #00ffc8;
+    color: #002018;
+    box-shadow: 0 0 12px #00ffc8, 0 0 22px #00ffc880;
+}
+
+/* AUDIO/TIME — Neon Purple */
+.tool-group:nth-child(3) > summary::before {
+    content: "▶";
+    background: #c77dff;
+    color: #1a0030;
+    box-shadow: 0 0 12px #c77dff, 0 0 22px #c77dff80;
+}
+
+/* ADVANCED — Neon Orange */
+.tool-group:nth-child(4) > summary::before {
+    content: "▶";
+    background: #ff9d00;
+    color: #301a00;
+    box-shadow: 0 0 12px #ff9d00, 0 0 22px #ff9d0080;
+}
+
+/* SIMULATORS — Neon Pink */
+.tool-group:nth-child(5) > summary::before {
+    content: "▶";
+    background: #ff00aa;
+    color: #30001d;
+    box-shadow: 0 0 12px #ff00aa, 0 0 22px #ff00aa80;
+}
+
+/* ===== Telepresence compatibility layer (keeps existing HTML working) ===== */
+
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding: 12px 18px;
+  background: rgba(2,6,23,0.65);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148,163,184,0.18);
+}
+
+.title{
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* status pill (existing id=status uses .pill) */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(148,163,184,0.35);
+  background: rgba(15,23,42,0.85);
+  color: #e5e7eb;
+}
+
+/* two-column layout wrapper */
+.grid2{
+  display:grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 16px;
+  align-items:start;
+}
+@media (max-width: 900px){
+  .grid2{ grid-template-columns: 1fr; }
+}
+
+/* Map legacy .btn / .input to your global button/input styling */
+.btn{
+  /* keep the element as a real button; global button styles apply automatically */
+}
+.btn.big{ padding: 8px 14px; }
+.btn.ghost{ background: rgba(15,23,42,0.9) !important; }
+.btn.stop{ background: linear-gradient(135deg, #f87171, #fb923c) !important; }
+
+.input{
+  width:100%;
+}
+
+.log{
+  margin-top: 10px;
+}
+
+/* Live video stage: remote focus + local thumbnail */
+.videoStage{
+  position: relative;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  margin-top: 10px;
+  border: 1px solid rgba(148,163,184,0.22);
+}
+
+#remoteVideo{
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #000;
+}
+
+.videoThumb{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: min(32vw, 220px);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,0.35);
+  background: #000;
+}
+
+@media (max-width: 900px){
+  .videoThumb{ width: min(38vw, 200px); }
+}
+
+/* Fullscreen polish */
+#videoStage:fullscreen{
+  border-radius: 0;
+  margin-top: 0;
+  border: none;
+  width: 100vw;
+  height: 100vh;
+}
+#videoStage:fullscreen #remoteVideo{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#videoStage:fullscreen .videoThumb{
+  display: none;
+}
+
+/* Disabled cue (JS toggles .disabled on some controls) */
+button.disabled{
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+}
+
+/* Ensure decorative pseudo-elements never block clicks */
+.card::before,
+.card::after,
+.sensor-card::before,
+.chip::after{
+  pointer-events: none;
+}
+
+
+
+/* === Video focus layout tweaks (Jan 2026) === */
+.row-top .col-left { flex: 1.7; }
+.row-top .col-right { flex: 1; }
+
+/* Give the video area more presence */
+.videoStage { min-height: 460px; }
+
+/* D-pad less dominant (still touch-friendly) */
+.dpad-btn { width: 52px; height: 40px; font-size: 1.1rem; }
+.dpad-center { width: 26px; height: 26px; }
+.dpad-wrapper { gap: 8px; margin-top: 8px; }
+
+/* Slightly tighten controls card padding */
+.dpad-section { padding-bottom: 6px; }
+
+/* === micro:bit Live Link layout === */
+.row-room-mb { align-items: stretch; }
+.row-room-mb .col-left, .row-room-mb .col-right { display:flex; flex-direction:column; }
+#microbitCard .button-row { flex-wrap: wrap; }
+#microbitCard button { white-space: nowrap; }
+
+/* Ensure decorative card layers never block clicks */
+.card::before, .card::after { pointer-events: none; }
+
+
+/* === Clean layout: video left, controls right === */
+.top-row{
+  display:grid;
+  grid-template-columns: 2.1fr 1fr;
+  gap:16px;
+  align-items:start;
+}
+@media (max-width: 900px){
+  .top-row{ grid-template-columns: 1fr; }
+}
+
+/* Room + micro:bit under video */
+.row-room-mb{
+  display:grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap:16px;
+  margin-top:16px;
+}
+.row-room-mb > .col-left,
+.row-room-mb > .col-right{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+@media (max-width: 900px){
+  .row-room-mb{ grid-template-columns: 1fr; }
+}
+
+/* Video gets more presence */
+#videoStage{
+  min-height: 520px;
+}
+@media (max-width: 900px){
+  #videoStage{ min-height: 380px; }
+}
+
+/* D-pad a bit smaller so video dominates */
+.dpad-wrapper{
+  transform: scale(0.82);
+  transform-origin: top center;
+}
+
+/* Make right column feel tidy */
+.row-top .col-right .card{ margin-bottom:16px; }
+
+
+
+/* === Room + micro:bit row polish === */
+.row-room-mb{
+  align-items: stretch;
+}
+.row-room-mb .col-left,
+.row-room-mb .col-right{
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.row-room-mb .card{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.row-room-mb .card .hint{
+  margin-top: auto;
+}
+
+
+/* === Remote fullscreen request overlay === */
+.remote-fs-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(2,6,23,0.72);
+  backdrop-filter: blur(4px);
+  z-index: 30;
+  pointer-events: auto;
+}
+.remote-fs-panel{
+  width:min(440px, 92%);
+  border-radius: 14px;
+  border: 1px solid rgba(148,163,184,0.35);
+  background: radial-gradient(circle at top left, rgba(15,23,42,0.98), rgba(2,6,23,0.98));
+  padding: 14px 14px 12px;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.55);
+  text-align: center;
+}
+.remote-fs-title{
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+.remote-fs-subtitle{
+  color: #9ca3af;
+  font-size: 0.80rem;
+  margin-bottom: 12px;
+}
+.remote-fs-actions{
+  display:flex;
+  gap: 10px;
+  justify-content:center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.remote-fs-hint{
+  color:#6b7280;
+  font-size:0.72rem;
+}
+
+
+/* === On-video command HUD (subtle) === */
+#videoStage { position: relative; }
+.cmd-hud{
+  position:absolute;
+  left: 10px;
+  bottom: 10px;
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(2,6,23,0.38);
+  border: 1px solid rgba(148,163,184,0.20);
+  color: rgba(249,250,251,0.88);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cmd-hud.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+.cmd-hud-icon{
+  opacity: 0.8;
+}
+
+#videoStage{position:relative;}
+#localVideo{position:absolute;right:12px;bottom:12px;width:160px;height:120px;z-index:15;cursor:grab;touch-action:none;}
+#localVideo.dragging{cursor:grabbing;}
+.cmd-hud{position:absolute;left:10px;bottom:10px;z-index:30;pointer-events:none;}
+.cmd-hud-bubble{background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;padding:6px 10px;border-radius:999px;opacity:0;transform:translateY(4px);transition:.18s;}
+.cmd-hud-bubble.show{opacity:1;transform:none;}
+
+/* === Debug: latest RX overlay === */
+#videoStage, .videoStage{position:relative;}
+.rx-debug{
+  position:absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 999;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  pointer-events: none;
+  max-width: 720px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === RX simple debug bar === */
+#videoStage, .videoStage{ position:relative; }
+.rx-bar{
+  position:absolute;
+  left:8px;
+  right:8px;
+  bottom:8px;
+  z-index:50;
+  padding:6px 10px;
+  border-radius:8px;
+  background:rgba(0,0,0,0.65);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#e5e7eb;
+  font-size:0.75rem;
+  font-family:monospace;
+  pointer-events:none;
+}
+
+.rx-bar{ opacity: 0.65; transition: opacity 180ms ease; }
+.rx-bar.show{ opacity: 1; }
+
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.25);font-size:0.7rem;margin-left:6px;}
+
+#snapBtn, #recBtn{
+  margin-left:8px;
+  height:28px;
+  padding:0 10px;
+  font-size:0.75rem;
+  border-radius:999px;
+}
+
+
+/* Hide legacy top RX/HUD overlays */
+#cmdHud, #rxDebug, .rx-debug, .cmd-hud { display:none !important; }
+
+/* Bottom RX bar toggle */
+.rx-bar.is-hidden{ display:none !important; }
+
+
+#speakBtn{ margin-left:8px; }
+@media (max-width:600px){ .sendtext-section .form-row{ flex-wrap:wrap; gap:8px;} #speakBtn{margin-left:0;} }
+
+/* Send text row: avoid clipping on small widths */
+#textInput{flex:1 1 260px; min-width:0;}
+#sendTextBtn, #speakBtn{flex:0 0 auto; white-space:nowrap;}
+@media (max-width: 520px){
+  #sendTextBtn, #speakBtn{flex:1 1 auto;}
+}
+
+
+/* Send Text: keep Send + Speak on same line */
+.sendtext-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+.sendtext-row input{
+  min-width: 0;
+}
+.sendtext-actions{
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+.sendtext-actions .secondary{
+  white-space: nowrap;
+}
+@media (max-width: 520px){
+  .sendtext-row{
+    grid-template-columns: 1fr;
+  }
+  .sendtext-actions{
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+
+/* === Send text: input above buttons === */
+.sendtext-row{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.sendtext-row > input#textInput{
+  width:100%;
+}
+.sendtext-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+/* Send text section - one line layout */
+.sendtext-section .form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap; /* Keep everything on one line */
+}
+
+/* The text input */
+#textInput {
+    flex: 1;
+    min-width: 0; /* Allow shrinking */
+    border-radius: 8px !important;
+    height: 38px;
+    min-height: 38px;
+    max-height: 38px;
+    resize: none;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(31,41,55,0.9);
+    background: rgba(15,23,42,0.95);
+    color: #e5e7eb;
+}
+
+/* Remove any textarea-specific styles that might be overriding */
+#textInput[type="text"],
+.sendtext-section textarea#textInput {
+    border-radius: 8px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+}
+
+/* Buttons should match height */
+#sendTextBtn,
+#speakBtn {
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    white-space: nowrap;
+}
+
+/* For responsive design */
+@media (max-width: 600px) {
+    .sendtext-section .form-row {
+        flex-wrap: wrap; /* Allow wrapping on mobile */
+    }
+    
+    #textInput {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    
+    #sendTextBtn,
+    #speakBtn {
+        flex: 1;
+        min-width: 120px;
+    }
+}
+
+
+/* =========================================================
+   D-PAD REDESIGN (bigger + more touch-friendly)
+   Drop-in overrides — no HTML/JS changes required
+   ========================================================= */
+
+/* Undo earlier shrinking that made the D-pad too small */
+.dpad-wrapper{
+  transform: none !important;
+  transform-origin: center !important;
+}
+
+/* Layout: classic 3-row D-pad */
+.dpad-wrapper{
+  display: grid !important;
+  grid-template-rows: auto auto auto;
+  gap: 14px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 16px;
+}
+
+/* Middle row spacing (left / center / right) */
+.dpad-middle-row{
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+/* Center nub */
+.dpad-center{
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 30% 30%, #111827, #020617) !important;
+  border: 2px solid rgba(148,163,184,0.55) !important;
+  box-shadow:
+    inset 0 0 10px rgba(0,0,0,0.85),
+    0 0 12px rgba(148,163,184,0.22) !important;
+}
+
+/* Arrow buttons: bigger hit area */
+.dpad-btn{
+  width: 84px !important;
+  height: 64px !important;
+  padding: 0 !important;
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+  border-radius: 16px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: linear-gradient(145deg, #1f2937, #020617) !important;
+  border: 2px solid rgba(148,163,184,0.45) !important;
+
+  box-shadow:
+    0 6px 14px rgba(0,0,0,0.60),
+    inset 0 0 0 1px rgba(255,255,255,0.05) !important;
+
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease !important;
+  touch-action: manipulation;
+}
+
+/* Hover / press feedback */
+.dpad-btn:hover{
+  transform: scale(1.10) !important;
+  filter: brightness(1.06) !important;
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.78),
+    0 0 18px rgba(34,197,94,0.55) !important;
+}
+
+.dpad-btn:active{
+  transform: scale(0.96) !important;
+  box-shadow:
+    inset 0 5px 12px rgba(0,0,0,0.92),
+    0 3px 10px rgba(0,0,0,0.55) !important;
+}
+
+/* Mobile: keep large but fit narrow screens */
+@media (max-width: 520px){
+  .dpad-btn{
+    width: 72px !important;
+    height: 56px !important;
+    font-size: 1.45rem !important;
+  }
+  .dpad-center{
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .dpad-middle-row{
+    gap: 22px !important;
+  }
+}
+/* =========================
+   STOP button – internal siren 🚨
+   ========================= */
+
+.fire-btn {
+  position: relative;
+  overflow: hidden;
+
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #fff !important;
+
+  border-radius: 14px !important;
+  border: 2px solid rgba(255,255,255,0.6) !important;
+
+  padding-left: 38px; /* space for siren */
+
+  box-shadow:
+    0 4px 10px rgba(239,68,68,0.35);
+
+  transition: transform 0.12s ease;
+}
+
+/* 🚨 Siren icon INSIDE the button */
+.fire-btn::before {
+  content: "🚨";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+
+  animation: siren-blink 1s infinite ease-in-out;
+}
+
+/* Urgent but calm blink */
+@keyframes siren-blink {
+  0%   { opacity: 0.35; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.35; }
+}
+
+/* Interaction stays subtle */
+.fire-btn:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+
+.fire-btn:active {
+  transform: scale(0.97);
+}
+
+
+
+/* =========================
+   Collapsible sections (Option A)
+   ========================= */
+details.collapsible {
+  margin-bottom: 12px;
+}
+
+details.collapsible > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 10px 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: rgba(15,23,42,0.85);
+  border: 1px solid rgba(148,163,184,0.3);
+  border-radius: 12px;
+}
+
+details.collapsible > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.collapsible > summary::before {
+  content: "▸";
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+details.collapsible[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+details.collapsible > .card {
+  margin-top: 8px;
+}
+
+/* === Mini Mission Control branding === */
+.app-title{
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: #35e0b7;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 6px rgba(53,224,183,.45),
+    0 0 14px rgba(53,224,183,.25);
+}
+
+.app-subtitle{
+  margin-top: 2px;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  color: #f3c623;
+  opacity: 0.95;
+}
+
+
+/* Discreet Bismillah (does not affect layout) */
+.bismillah {
+    position: absolute;
+    top: 6px;
+    inset-inline: 0;           /* RTL/LTR-safe full-width anchor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Amiri", "Noto Naskh Arabic", serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    opacity: 0.20;
+    color: rgba(200, 230, 255, 0.9);
+
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    text-shadow: 0 0 10px rgba(0,0,0,0.35);
+}
+
+@media (max-width: 520px) {
+  .bismillah { font-size: 10px; top: 4px; }
+}

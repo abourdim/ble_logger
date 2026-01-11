@@ -7,6 +7,7 @@ const RX_CHAR_UUID = '6e408082-b5a3-f393-e0a9-e50e24dcca9e';  // Your write char
 // DOM Elements
 const statusDot = document.getElementById('statusDot');
 const statusText = document.getElementById('statusText');
+const statusPill = document.getElementById('statusPill');
 const connectBtn = document.getElementById('connectBtn');
 const disconnectBtn = document.getElementById('disconnectBtn');
 const messageInput = document.getElementById('messageInput');
@@ -76,6 +77,7 @@ function setConnectionStatus(connected) {
     // Update UI
     if (connected) {
         statusDot.classList.add('connected');
+        if (statusPill) statusPill.classList.add('connected');
         statusText.textContent = 'Connected';
         connectBtn.disabled = true;
         disconnectBtn.disabled = false;
@@ -83,6 +85,7 @@ function setConnectionStatus(connected) {
         messageInput.focus();
     } else {
         statusDot.classList.remove('connected');
+        if (statusPill) statusPill.classList.remove('connected');
         statusText.textContent = 'Disconnected';
         connectBtn.disabled = false;
         disconnectBtn.disabled = true;

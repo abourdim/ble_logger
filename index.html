@@ -6,12 +6,17 @@
   <title>micro:bit BLE Logger</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="app">
     <div class="rows-container">
 
+      <!-- ================= HEADER ================= -->
       <div class="header">
-        <div class="bismillah" aria-hidden="true">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
+        <div class="bismillah" aria-hidden="true">
+          بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ
+        </div>
+
         <div class="title-block">
           <img src="logo.svg" alt="Logo" class="site-logo animated-logo" />
           <div>
@@ -26,61 +31,108 @@
         </div>
       </div>
 
+      <!-- ================= CONNECTION CARD ================= -->
       <div class="card" id="connectionCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">🔌</span> Connection</div>
-            <div class="card-subtitle">Connect to your micro:bit over Web Bluetooth</div>
+            <div class="card-title">
+              <span class="icon">🔌</span> Connection
+            </div>
+            <div class="card-subtitle">
+              Connect to your micro:bit over Web Bluetooth
+            </div>
           </div>
         </div>
 
         <div class="button-row">
-          <button id="connectBtn" class="primary"><span class="btn-icon">🔗</span>Connect</button>
-          <button id="disconnectBtn" class="secondary" disabled><span class="btn-icon">⛔</span>Disconnect</button>
-          <button id="clearLogBtn" class="secondary"><span class="btn-icon">🧹</span>Clear Log</button>
+          <button id="connectBtn" class="primary">
+            <span class="btn-icon">🔗</span>Connect
+          </button>
+
+          <button id="disconnectBtn" class="secondary" disabled>
+            <span class="btn-icon">⛔</span>Disconnect
+          </button>
+
+          <button id="testBtn" class="secondary" disabled>
+            <span class="btn-icon">🧪</span>Test 0..1000
+          </button>
         </div>
 
         <div class="hint">
           <div class="hint-title">Tip</div>
           <ol>
-            <li>Use Chrome/Edge on desktop or Android</li>
+            <li>Use Chrome / Edge (desktop or Android)</li>
             <li>Select a device named <strong>BBC micro:bit</strong></li>
           </ol>
         </div>
       </div>
 
+      <!-- ================= SEND MESSAGE CARD ================= -->
       <div class="card" id="messageCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">✉️</span> Send Message</div>
-            <div class="card-subtitle">Type a short message and send it to the micro:bit</div>
+            <div class="card-title">
+              <span class="icon">✉️</span> Send Message
+            </div>
+            <div class="card-subtitle">
+              Type a short message and send it to the micro:bit
+            </div>
           </div>
         </div>
 
         <div class="control-section">
           <div class="section-header">
-            <div class="section-title"><span class="section-icon">⌨️</span> Message</div>
-            <div class="section-subtitle">Press Enter or click Send</div>
+            <div class="section-title">
+              <span class="section-icon">⌨️</span> Message
+            </div>
+            <div class="section-subtitle">
+              Press Enter or click Send
+            </div>
           </div>
+
           <div class="form-row">
-            <input type="text" id="messageInput" placeholder="Type your message here..." />
-            <button id="sendBtn" class="primary" disabled><span class="btn-icon">📨</span>Send</button>
+            <input
+              type="text"
+              id="messageInput"
+              placeholder="Type your message here..."
+            />
+            <button id="sendBtn" class="primary" disabled>
+              <span class="btn-icon">📨</span>Send
+            </button>
           </div>
         </div>
       </div>
 
+      <!-- ================= LOG CARD ================= -->
       <div class="card log-card" id="logCard">
         <div class="card-header">
           <div>
-            <div class="card-title"><span class="icon">📜</span> Communication Log</div>
-            <div class="card-subtitle">TX = sent • RX = received</div>
+            <div class="card-title">
+              <span class="icon">📜</span> Communication Log
+            </div>
+            <div class="card-subtitle">
+              TX = sent • RX = received
+            </div>
           </div>
+
+          <!-- LOG CONTROLS -->
           <div class="log-controls">
-            <button id="exportLogBtn" class="secondary small"><span class="btn-icon">⬇️</span>Export</button>
+            <button id="clearLogBtn" class="secondary small">
+              <span class="btn-icon">🧹</span>Clear
+            </button>
+
+            <button id="copyLogBtn" class="secondary small">
+              <span class="btn-icon">📋</span>Copy
+            </button>
+
+            <button id="exportLogBtn" class="secondary small">
+              <span class="btn-icon">⬇️</span>Export
+            </button>
           </div>
         </div>
 
         <div class="log" id="logContainer" aria-live="polite"></div>
+
         <div class="log-footer">
           <span>micro:bit BLE Logger</span>
           <span class="badge"><strong>UART</strong> service</span>
